@@ -1,0 +1,5 @@
+{
+  "presets": ["latest", "react"],
+  "plugins": ["transform-react-jsx", "transform-object-rest-spread"],
+  "ignore": []
+}

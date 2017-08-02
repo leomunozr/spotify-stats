@@ -1,0 +1,12 @@
+{
+  "auth_uri": "https://accounts.spotify.com/authorize",
+  "client_id": "0e1bc905c38f456ba2991f8be45962ca",
+  "response_type": "token",
+  "redirect_uri": "http://localhost:8080",
+  "state": "123",
+  "scope": [
+    "user-library-read",
+    "user-top-read"
+  ],
+  "show_dialog": "false"
+}
