@@ -4,6 +4,7 @@ import AuthenticatedRoute from './authenticated-route';
 
 import AlbumsContainer from './albums.container';
 import MyTopContainer from './my-top.container';
+import PlaylistsContainer from './playlists.container';
 import ProfileContainer from './profile.container';
 import Login from './login';
 
@@ -17,6 +18,7 @@ const Content = (props) => {
         <AuthenticatedRoute path="/profile" component={ProfileContainer} {...props} />
         <AuthenticatedRoute path="/albums" component={AlbumsContainer} {...props} />
          <AuthenticatedRoute path="/my-top" component={MyTopContainer} {...props} />
+         <AuthenticatedRoute path="/playlists" component={PlaylistsContainer} {...props} />
         <Route path="/login" component={Login} />
         <Redirect to="/profile" />
       </Switch>

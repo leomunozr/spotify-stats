@@ -28,7 +28,6 @@ class MyTopContainer extends React.Component{
 
     getMyTopTracks().
       then(topTracks => {
-        console.log(topTracks);
         this.setState({ topTracks });
       })
       .catch(err => {

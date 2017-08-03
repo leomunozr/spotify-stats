@@ -87,3 +87,44 @@ export const getMyTopTracks = () => {
       });
     });
 }
+
+export const getMyPlaylists = () => {
+  const accessToken = getAccessToken();
+
+  return axios.get(`${baseUrl}/me/playlists`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+    .then(res => {
+      const { items } = res.data;
+      return items.map(item => {
+        return {
+          id: item.id,
+          name: item.name
+        }
+      });
+    });
+}
+
+export const getPlaylistTracks = (playlistId) => {
+  const accessToken = getAccessToken();
+  const userId = '1277256033';
+
+  return axios.get(`${baseUrl}/users/${userId}/playlists/${playlistId}/tracks`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+    .then(res => {
+      const { items } = res.data;
+      return items.map(item => {
+        return {
+          id: item.track.id,
+          name: item.track.name,
+          album: item.track.album.name,
+          artists: item.track.artists.map((artist) => artist.name)
+        };
+      });
+    });
+}
