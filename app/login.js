@@ -25,7 +25,7 @@ const Login = (props) => {
 
   return (
     <div className="login">
-      <h2>Please log in</p>
+      <h2>Please log in</h2>
       <a href={uri}>Login</a>
     </div>
   )
