@@ -6,7 +6,7 @@ const Menu = () => {
     <div className="menu">
       <Link className="item" to="/profile">Profile</Link>
       <Link className="item" to="/albums">Albums</Link>
-      <Link className="item" to="/artists">Artists</Link>
+      <Link className="item" to="/my-top">My Top</Link>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import AuthenticatedRoute from './authenticated-route';
 
 import AlbumsContainer from './albums.container';
-import ArtistsContainer from './artists.container';
+import MyTopContainer from './my-top.container';
 import ProfileContainer from './profile.container';
 import Login from './login';
 
@@ -16,7 +16,7 @@ const Content = (props) => {
       <Switch>
         <AuthenticatedRoute path="/profile" component={ProfileContainer} {...props} />
         <AuthenticatedRoute path="/albums" component={AlbumsContainer} {...props} />
-         <AuthenticatedRoute path="/artists" component={ArtistsContainer} {...props} />
+         <AuthenticatedRoute path="/my-top" component={MyTopContainer} {...props} />
         <Route path="/login" component={Login} />
         <Redirect to="/profile" />
       </Switch>
