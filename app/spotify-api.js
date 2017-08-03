@@ -42,26 +42,48 @@ export const getMyAlbums = () => {
     });
 }
 
-export const getMyTopArtists = () => {
+export const getMyTopWithParams = (type, params) => {
   const accessToken = getAccessToken();
+
+  return axios.get(`${baseUrl}/me/top/${type}?${constructQuery(params)}`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  });
+}
+
+export const getMyTopArtists = () => {
   const params = {
     limit: 5,
     time_range: 'long_term'
   };
 
-  return axios.get(`${baseUrl}/me/top/artists?${constructQuery(params)}`, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  })
+  return getMyTopWithParams('artists', params)
     .then(res => {
       return res.data.items.map(item => {
         return {
           id: item.id,
           name: item.name,
-          artistImage: item.images[1]
+          topImage: item.images[1]
         };
       });
     });
 }
 
+export const getMyTopTracks = () => {
+  const params = {
+    limit: 5,
+    time_range: 'long_term'
+  };
+
+  return getMyTopWithParams('tracks', params)
+    .then(res => {
+      return res.data.items.map(item => {
+        return {
+          id: item.id,
+          name: item.name,
+          artists: item.artists.map(artist => artist.name)
+        };
+      });
+    });
+}
