@@ -1,14 +1,17 @@
 import React from 'react';
 
-const renderTracks = (track) => (
-  <li key={track.id}>{`${track.name} - ${track.artists.join(' & ')}`}</li>
+const renderTracks = (track, index) => (
+  <span key={track.id}>{`${index+1}. ${track.name} - ${track.artists.join(' & ')}`}</span>
 )
 
 const TracksList = (props) => {
+  console.log(props)
   return (
-    <ol className="tracks-list">
-      {props.tracks.map(renderTracks)}
-    </ol>
+    <div className="tracks-list">
+      {props.hasError ?
+        <span>{props.hasError}</span> :
+      props.tracks.map(renderTracks)}
+    </div>
   )
 }
 

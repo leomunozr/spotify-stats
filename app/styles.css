@@ -131,3 +131,10 @@ html, body, #root { height: 100%; }
 .my-top__artists__item img {
   width: 150px;
 }
+
+
+.tracks-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}

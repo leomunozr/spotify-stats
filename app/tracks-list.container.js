@@ -17,11 +17,19 @@ class TracksListContainer extends React.Component {
       })
       .catch(err => {
         console.error(err);
+        if (err.response) {
+          let message;
+          switch (err.response.status) {
+            case 404: this.setState({ hasError: "Ooops! An error occurred. :(" });
+          }
+        }
+
       });
   }
 
   getProps() {
     return {
+      hasError: this.state.hasError,
       tracks: this.state.tracks
     };
   }
