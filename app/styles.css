@@ -16,27 +16,37 @@ html, body, #root { height: 100%; }
   padding: 20px;
   width: calc(100% - 120px);
 }
+/* Menu */
 .menu {
   align-content: center;
+  background-color: mediumaquamarine;
   border-right: solid 1px black;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-top: 80px;
-  width: 120px;
+  padding-top: 5vw;
+  width: 5vw;
 }
 .item {
   align-items: center;
-  display: flex;
-  height: 80px;
-  justify-content: center;
   border-top: solid 1px black;
+  display: flex;
+  height: 5vw;
+  justify-content: center;
+  padding: 1vw;
 }
 .item:last-of-type {
   border-bottom: solid 1px black;
 }
 .item:hover {
-  background-color: #cdcdcd;
+  background-color: aquamarine;
+}
+.item--active {
+    background-color: aquamarine;
+  }
+.item img {
+  max-height: 100%;
+  max-width: 100%;
 }
 .login {
   align-items: center;
