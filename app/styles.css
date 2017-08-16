@@ -46,11 +46,15 @@ html, body, #root { height: 100%; }
 }
 .item--active {
     background-color: aquamarine;
-  }
+}
+.item--bottom {
+  margin-top: auto;
+}
 .item img {
   max-height: 100%;
   max-width: 100%;
 }
+
 .login {
   align-items: center;
   display: flex;

@@ -6,7 +6,7 @@ const Main = (props) => {
 
   return (
     <div className="main">
-      {props.isAuthenticated && <Menu />}
+      {props.isAuthenticated && <Menu logout={props.logout} />}
       <Content {...props} />
     </div>
   );

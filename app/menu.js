@@ -11,13 +11,29 @@ const Menu = (props) => {
   return (
     <div className="menu">
       <Link to="/profile"
-        className={`item ${isActive('/profile')}`}><img src="../images/home.png" alt="home" /></Link>
+        title="Profile"
+        className={`item ${isActive('/profile')}`}>
+        <img src="../images/home.png" alt="home" />
+      </Link>
       <Link to="/albums"
-        className={`item ${isActive('/albums')}`}><img src="../images/album.png" alt="album" /></Link>
+        title="Albums"
+        className={`item ${isActive('/albums')}`}>
+        <img src="../images/album.png" alt="album" />
+      </Link>
       <Link to="/my-top"
-        className={`item ${isActive('/my-top')}`}><img src="../images/medal.png" alt="medal" /></Link>
+        title="My top"
+        className={`item ${isActive('/my-top')}`}>
+        <img src="../images/medal.png" alt="medal" />
+      </Link>
       <Link to="/playlists"
-        className={`item ${isActive('/playlists')}`}><img src="../images/playlist.png" alt="playlist" /></Link>
+        title="Playlists"
+        className={`item ${isActive('/playlists')}`}>
+        <img src="../images/playlist.png" alt="playlist" />
+      </Link>
+      <div className="item item--bottom"
+        title="Logout">
+        <img src="../images/exit.png" alt="logout" />
+      </div>
     </div>
   )
 }
