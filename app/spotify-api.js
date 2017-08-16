@@ -123,7 +123,8 @@ export const getPlaylistTracks = (playlistId) => {
           id: item.track.id,
           name: item.track.name,
           album: item.track.album.name,
-          artists: item.track.artists.map((artist) => artist.name)
+          artists: item.track.artists.map((artist) => artist.name),
+          popularity: item.track.popularity
         };
       });
     });
