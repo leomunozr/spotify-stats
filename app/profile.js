@@ -16,21 +16,15 @@ const Profile = (props) => {
 
   return (
     <div className="profile">
-      <header>
-        <div className="pic">
-          <img src={profilePic} alt="me" />
-        </div>
-        <h2>{name}</h2>
-      </header>
-      <section>
-        <p><b>Your ID:</b> {id}</p>
-        <p><b>Country:</b> {country}
-          {country && <span className={`flag-icon flag-icon-${country.toLowerCase()}`}></span>}
-        </p>
-        <p><b>e-mail:</b> {email}</p>
-        <p><b>Followers:</b> {followers}</p>
-        <p><b>Type:</b> {product}</p>
-      </section>
+      <div className="profile__pic">
+        <img src={profilePic} alt="me" />
+      </div>
+      <h2>{name}</h2>
+      <span>{email}</span>
+      <span><b>ID:</b> {id}</span>
+      <span><b>Followers:</b> {followers}</span>
+      <span><b>Type:</b> {product}</span>
+      {country && <span className={`flag-icon flag-icon-${country.toLowerCase()}`}></span>}
     </div>
   );
 }
