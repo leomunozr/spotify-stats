@@ -1,4 +1,5 @@
 .gitignore
+.babelrc
 /node_modules
 /app
 package.json
