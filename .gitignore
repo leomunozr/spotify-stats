@@ -1,2 +1,5 @@
+.gitignore
 /node_modules
-/dist
+/app
+package.json
+webpack.config.js
