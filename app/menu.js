@@ -31,7 +31,8 @@ const Menu = (props) => {
         <img src="../images/playlist.png" alt="playlist" />
       </Link>
       <div className="item item--bottom"
-        title="Logout">
+        title="Logout"
+        onClick={props.logout}>
         <img src="../images/exit.png" alt="logout" />
       </div>
     </div>

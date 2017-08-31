@@ -32,6 +32,7 @@ html, body, #root { height: 100%; }
 .item {
   align-items: center;
   border-top: solid 1px black;
+  cursor: pointer;
   display: flex;
   height: 5vw;
   justify-content: center;
