@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Link, withRouter } from 'react-router-dom';
-import TracksListContainer from './tracks-list.container';
+import TracksListContainer from '../containers/tracks-list.container';
 
 const Playlists = (props) => {
 

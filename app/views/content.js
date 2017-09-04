@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import AlbumsContainer from './albums.container';
-import AuthenticatedRoute from './authenticated-route';
+import AlbumsContainer from '../containers/albums.container';
+import AuthenticatedRoute from '../authenticated-route';
 import Login from './login';
-import MyTopContainer from './my-top.container';
-import PlaylistsContainer from './playlists.container';
-import ProfileContainer from './profile.container';
+import MyTopContainer from '../containers/my-top.container';
+import PlaylistsContainer from '../containers/playlists.container';
+import ProfileContainer from '../containers/profile.container';
 
 const Content = (props) => {
 

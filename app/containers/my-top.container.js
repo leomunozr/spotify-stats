@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import MyTop from './my-top';
-import { getMyTopArtists, getMyTopTracks } from './spotify-api.js';
+import MyTop from '../views/my-top';
+import { getMyTopArtists, getMyTopTracks } from '../api/spotify-api.js';
 
 class MyTopContainer extends React.Component{
 

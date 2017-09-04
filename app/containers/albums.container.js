@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Albums from './albums';
-import { getMyAlbums, getMyTopArtists } from './spotify-api';
+import Albums from '../views/albums';
+import { getMyAlbums, getMyTopArtists } from '../api/spotify-api';
 
 class AlbumsContainer extends React.Component {
 

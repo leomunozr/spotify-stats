@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Profile from './profile';
-import { getMyProfile } from './spotify-api.js';
+import Profile from '../views/profile';
+import { getMyProfile } from '../api/spotify-api';
 
 class ProfileContainer extends React.Component {
 

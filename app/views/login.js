@@ -1,5 +1,5 @@
 import React from 'react';
-import spotifyConfig from '../spotify.config';
+import spotifyConfig from '../../spotify.config';
 
 const {
   auth_uri,

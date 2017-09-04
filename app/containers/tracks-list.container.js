@@ -1,6 +1,6 @@
 import React from 'react';
-import { getPlaylistTracks } from './spotify-api';
-import TracksList from './tracks-list';
+import { getPlaylistTracks } from '../api/spotify-api';
+import TracksList from '../views/tracks-list';
 
 class TracksListContainer extends React.Component {
 
