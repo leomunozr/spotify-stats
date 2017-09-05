@@ -24,8 +24,13 @@ class PlaylistsContainer extends React.Component {
       })
       .catch(err => {
         console.error(err);
-        if (err.response.status === 401) {
-          this.props.logout();
+
+        if (err.response) {
+          this.setState({ isLoading: false });
+
+          switch (err.response.status) {
+            case 401: this.props.logout();
+          }
         }
       });
   }

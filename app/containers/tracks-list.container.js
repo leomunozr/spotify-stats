@@ -23,11 +23,13 @@ class TracksListContainer extends React.Component {
       })
       .catch(err => {
         console.error(err);
+
         if (err.response) {
           let message;
+          this.setState({ isLoading: false });
+
           switch (err.response.status) {
             case 404: this.setState({ hasError: "Ooops! An error occurred. :(" });
-            default: this.setState({ isLoading: false });
           }
         }
 

@@ -17,29 +17,36 @@ class MyTopContainer extends React.Component{
   }
 
   componentDidMount() {
-    getMyTopArtists()
+    const myTopArtists = getMyTopArtists()
       .then(topArtists => {
         this.setState({
           isLoading: false,
           topArtists
         });
-      })
-      .catch(err => {
-        console.error(err);
-        if (err.response.status === 401) {
-          this.props.logout();
-        }
       });
 
-    getMyTopTracks().
-      then(topTracks => {
+    const myTopTracks = getMyTopTracks()
+      .then(topTracks => {
         this.setState({
           isLoading: false,
           topTracks
         });
+      });
+
+    Promise.all([myTopArtists, myTopTracks])
+      .then(() => {
+        this.setState({ isLoading: false })
       })
       .catch(err => {
         console.error(err);
+
+        if (err.response) {
+          this.setState({ isLoading: false });
+
+          switch (err.response.status) {
+            case 401: this.props.logout();
+          }
+        }
       });
   }
 
