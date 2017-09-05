@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Albums from '../views/albums';
+import Loading from '../views/loading';
 import { getMyAlbums, getMyTopArtists } from '../api/spotify-api';
 
 class AlbumsContainer extends React.Component {
@@ -8,13 +9,19 @@ class AlbumsContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { albums: [] };
+    this.state = {
+      albums: [],
+      isLoading: true
+    };
   }
 
   componentDidMount() {
     getMyAlbums()
       .then(albums => {
-        this.setState({ albums });
+        this.setState({
+          albums,
+          isLoading: false
+        });
       })
       .catch(err => {
         console.error(err);
@@ -31,9 +38,9 @@ class AlbumsContainer extends React.Component {
   }
 
   render() {
-    return (
+    return this.state.isLoading ?
+      <Loading /> :
       <Albums {...this.getProps() } />
-    );
   }
 }
 

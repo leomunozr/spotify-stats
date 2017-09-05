@@ -1,19 +1,25 @@
 import React from 'react';
 import { getPlaylistTracks } from '../api/spotify-api';
 import TracksList from '../views/tracks-list';
+import Loading from '../views/loading';
 
 class TracksListContainer extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = { tracks: [] };
+    this.state = {
+      isLoading: true,
+      tracks: []
+    };
   }
 
   componentDidMount() {
     getPlaylistTracks(this.props.playlistId)
       .then(tracks => {
-        this.setState({ tracks });
+        this.setState({
+          isLoading: false,
+          tracks
+        });
       })
       .catch(err => {
         console.error(err);
@@ -21,6 +27,7 @@ class TracksListContainer extends React.Component {
           let message;
           switch (err.response.status) {
             case 404: this.setState({ hasError: "Ooops! An error occurred. :(" });
+            default: this.setState({ isLoading: false });
           }
         }
 
@@ -35,9 +42,9 @@ class TracksListContainer extends React.Component {
   }
 
   render() {
-    return (
+    return this.state.isLoading ?
+      <Loading /> :
       <TracksList {...this.getProps() } />
-    );
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Loading from '../views/loading';
 import Profile from '../views/profile';
 import { getMyProfile } from '../api/spotify-api';
 
@@ -9,6 +10,7 @@ class ProfileContainer extends React.Component {
     super(props);
 
     this.state = {
+      isLoading: true,
       me: {
         country: '',
         display_name: '',
@@ -27,7 +29,10 @@ class ProfileContainer extends React.Component {
   componentDidMount() {
     getMyProfile(this.props.accessToken)
       .then(res => {
-        this.setState({ me: res.data });
+        this.setState({
+          isLoading: false,
+          me: res.data
+        });
       })
       .catch(err => {
         console.error(err);
@@ -44,9 +49,9 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
-    return (
+    return this.state.isLoading ?
+      <Loading /> :
       <Profile {...this.getProps() } />
-    );
   }
 }
 

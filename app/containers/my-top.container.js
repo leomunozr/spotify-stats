@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Loading from '../views/loading';
 import MyTop from '../views/my-top';
 import { getMyTopArtists, getMyTopTracks } from '../api/spotify-api.js';
 
@@ -9,6 +10,7 @@ class MyTopContainer extends React.Component{
     super(props);
 
     this.state = {
+      isLoading: true,
       topArtists: [],
       topTracks: []
     };
@@ -17,7 +19,10 @@ class MyTopContainer extends React.Component{
   componentDidMount() {
     getMyTopArtists()
       .then(topArtists => {
-        this.setState({ topArtists });
+        this.setState({
+          isLoading: false,
+          topArtists
+        });
       })
       .catch(err => {
         console.error(err);
@@ -28,7 +33,10 @@ class MyTopContainer extends React.Component{
 
     getMyTopTracks().
       then(topTracks => {
-        this.setState({ topTracks });
+        this.setState({
+          isLoading: false,
+          topTracks
+        });
       })
       .catch(err => {
         console.error(err);
@@ -43,9 +51,9 @@ class MyTopContainer extends React.Component{
   }
 
   render() {
-    return (
+    return this.state.isLoading ?
+      <Loading /> :
       <MyTop {...this.getProps() } />
-    );
   }
 }
 
