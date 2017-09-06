@@ -1,6 +1,6 @@
-.gitignore
 .babelrc
 /node_modules
 /app
 package.json
 webpack.config.js
+npm-debug.log
