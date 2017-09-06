@@ -5,8 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "start npm run serve & npm run build:watch",
-    "deploy": "npm run build:production && git checkout gh-pages && git checkout master -- index.html dist images && git add -A && git commit -m \"Update from master\" && git push origin gh-pages",
+    "predeploy": "npm run build:production ",
+    "deploy": "git checkout gh-pages && git checkout master -- index.html dist images && git add -A && git commit -m \"Update from master\" && git push origin gh-pages",
     "postdeploy": "git checkout master",
+    "prebuild:production": "set NODE_ENV=production",
     "build:production": "webpack -p",
     "build:watch": "webpack -d --watch",
     "serve": "http-server ./",
