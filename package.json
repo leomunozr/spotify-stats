@@ -4,9 +4,12 @@
   "description": "Just testing Spotify's API",
   "main": "app.js",
   "scripts": {
-    "build": "webpack",
-    "serve": "serve /",
-    "watch": "webpack -d --watch",
+    "start": "start npm run serve & npm run build:watch",
+    "deploy": "npm run build:production && git checkout gh-pages && git checkout master -- index.html dist images && git add -A && git commit -m \"Update from master\" && git push origin gh-pages",
+    "postdeploy": "git checkout master",
+    "build:production": "webpack -p",
+    "build:watch": "webpack -d --watch",
+    "serve": "http-server ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -31,14 +34,13 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
     "file-loader": "^0.11.1",
-    "gulp": "^3.9.1",
-    "gulp-connect": "^5.0.0",
+    "http-server": "^0.10.0",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.18.1",
     "webpack": "^3.4.1"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/leomunozr/spotify-stats.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leomunozr/spotify-stats.git"
   }
 }
