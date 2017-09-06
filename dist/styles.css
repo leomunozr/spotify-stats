@@ -122,6 +122,8 @@ html, body, #root { height: 100%; }
   text-align: center;
   width:100%;
 }
+
+/* My top */
 .my-top__artists {
   display: flex;
   flex-wrap: wrap;
