@@ -1,7 +1,7 @@
-if (process.env.NODE_ENV.trim() !== "production") {
-  var redirect_uri = 'http://localhost:8080';
-} else {
+if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === "production") {
   var redirect_uri = 'https://leomunozr.github.io/spotify-stats/';
+} else {
+  var redirect_uri = 'http://localhost:8080';
 }
 
 const config = {
