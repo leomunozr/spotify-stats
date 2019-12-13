@@ -1,35 +1,29 @@
 import axios from 'axios';
 
 const baseUrl = 'https://api.spotify.com/v1';
+const userId = '1277256033';
 
 const getAccessToken = () => localStorage.getItem('accessToken');
 
-const constructQuery = (params) => {
-  return Object.entries(params)
+const constructQuery = (params) =>
+  Object.entries(params)
     .reduce((query, [key, val]) => {
       return query + `${key}=${val}&`
     }, '')
     .slice(0, -1);
-}
 
-export const getMyProfile = () => {
-  const accessToken = getAccessToken();
-
-  return axios.get(`${baseUrl}/me`, {
+const callApi = (url) =>
+  axios.get(`${baseUrl}${url}`, {
     headers: {
-      'Authorization': `Bearer ${accessToken}`
+      'Authorization': `Bearer ${getAccessToken()}`
     }
   });
-}
 
-export const getMyAlbums = () => {
-  const accessToken = getAccessToken();
+export const getMyProfile = () =>
+  callApi('/me');
 
-  return axios.get(`${baseUrl}/me/albums`, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  })
+export const getMyAlbums = () =>
+  callApi('/me/albums')
     .then(res => {
       const { items } = res.data;
       return items.map(item => {
@@ -40,22 +34,14 @@ export const getMyAlbums = () => {
         };
       });
     });
-}
 
-export const getMyTopWithParams = (type, params) => {
-  const accessToken = getAccessToken();
-
-  return axios.get(`${baseUrl}/me/top/${type}?${constructQuery(params)}`, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  });
-}
+export const getMyTopWithParams = (type, params) =>
+  callApi(`/me/top/${type}?${constructQuery(params)}`);
 
 export const getMyTopArtists = () => {
   const params = {
     limit: 5,
-    time_range: 'long_term'
+    time_range: 'short_term'
   };
 
   return getMyTopWithParams('artists', params)
@@ -73,7 +59,7 @@ export const getMyTopArtists = () => {
 export const getMyTopTracks = () => {
   const params = {
     limit: 5,
-    time_range: 'long_term'
+    time_range: 'short_term'
   };
 
   return getMyTopWithParams('tracks', params)
@@ -88,34 +74,19 @@ export const getMyTopTracks = () => {
     });
 }
 
-export const getMyPlaylists = () => {
-  const accessToken = getAccessToken();
-
-  return axios.get(`${baseUrl}/me/playlists`, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  })
+export const getMyPlaylists = () =>
+  callApi('/me/playlists')
     .then(res => {
-      const { items } = res.data;
-      return items.map(item => {
-        return {
-          id: item.id,
-          name: item.name
-        }
-      });
+      const { items, next } = res.data;
+
+      return items.map(item => ({
+        id: item.id,
+        name: item.name
+      }));
     });
-}
 
-export const getPlaylistTracks = (playlistId) => {
-  const accessToken = getAccessToken();
-  const userId = '1277256033';
-
-  return axios.get(`${baseUrl}/users/${userId}/playlists/${playlistId}/tracks`, {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`
-    }
-  })
+export const getPlaylistTracks = (playlistId) =>
+  callApi(`/users/${userId}/playlists/${playlistId}/tracks`)
     .then(res => {
       const { items } = res.data;
       return items.map(item => {
@@ -128,4 +99,3 @@ export const getPlaylistTracks = (playlistId) => {
         };
       });
     });
-}
