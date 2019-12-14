@@ -14,26 +14,31 @@ const Playlists = (props) => {
     <div className="playlists">
       <div className="playlists__list">
         <h1>My playlists</h1>
-        {props.playlists.map((playlist) => (
-          <Link to={`/playlists/${playlist.id}`}
-            key={playlist.id}
-            className={`playlists__list__item ${isSelected(playlist.id)}`}>
-            {playlist.name}
-          </Link>
-        ))}
+        {
+          props.playlists.map((playlist) => (
+            <Link to={ `/playlists/${playlist.id}` }
+              key={ playlist.id }
+              className={ `playlists__list__item ${isSelected(playlist.id)}` }>
+              { playlist.name }
+            </Link>
+          ))
+        }
+        { props.next && <button onClick={ props.loadMore }>+</button> }
       </div>
       <div className="playlists__content">
-        {props.playlists.map((playlist) => (
-          <Route
-            path={ `/playlists/${playlist.id}` }
-            render={ () =>
-              <TracksListContainer playlistId={ playlist.id } />
-            }
-            key={ playlist.id } />
-        ))}
+        {
+          props.playlists.map((playlist) => (
+            <Route
+              path={ `/playlists/${playlist.id}` }
+              render={ () =>
+                <TracksListContainer playlistId={ playlist.id } />
+              }
+              key={ playlist.id } />
+          ))
+        }
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default withRouter(Playlists);

@@ -12,12 +12,14 @@ const constructQuery = (params) =>
     }, '')
     .slice(0, -1);
 
-const callApi = (url) =>
-  axios.get(`${baseUrl}${url}`, {
+const callRawApi = (url) =>
+  axios.get(`${url}`, {
     headers: {
       'Authorization': `Bearer ${getAccessToken()}`
     }
   });
+
+const callApi = (url) => callRawApi(`${baseUrl}${url}`);
 
 export const getMyProfile = () =>
   callApi('/me');
@@ -74,28 +76,51 @@ export const getMyTopTracks = () => {
     });
 }
 
+const formatPlaylists = (res) => {
+  const { items, next } = res.data;
+
+  const playlists = items.map(item => ({
+    id: item.id,
+    name: item.name
+  }));
+
+  return {
+    next,
+    playlists
+  };
+};
+
 export const getMyPlaylists = () =>
   callApi('/me/playlists')
-    .then(res => {
-      const { items, next } = res.data;
+    .then(formatPlaylists);
 
-      return items.map(item => ({
-        id: item.id,
-        name: item.name
-      }));
-    });
+export const getNextPlaylists = (nextUrl) =>
+  callRawApi(nextUrl)
+    .then(formatPlaylists);
+
+const formatTracks = (res) => {
+  const { items, next } = res.data;
+
+  const tracks = items.map(item => {
+    return {
+      id: item.track.id,
+      name: item.track.name,
+      album: item.track.album.name,
+      artists: item.track.artists.map((artist) => artist.name),
+      popularity: item.track.popularity
+    };
+  });
+
+  return {
+    tracks,
+    next
+  };
+}
 
 export const getPlaylistTracks = (playlistId) =>
   callApi(`/users/${userId}/playlists/${playlistId}/tracks`)
-    .then(res => {
-      const { items } = res.data;
-      return items.map(item => {
-        return {
-          id: item.track.id,
-          name: item.track.name,
-          album: item.track.album.name,
-          artists: item.track.artists.map((artist) => artist.name),
-          popularity: item.track.popularity
-        };
-      });
-    });
+    .then(formatTracks);
+
+export const getNextPlaylistTracks = (nextUrl) =>
+  callRawApi(nextUrl)
+    .then(formatTracks);
