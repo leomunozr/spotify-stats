@@ -1,63 +1,49 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Loading from '../views/loading';
 import Profile from '../views/profile';
 import { getMyProfile } from '../api/spotify-api';
 
-class ProfileContainer extends React.Component {
+const initialMe = {
+  country: '',
+  display_name: '',
+  email: '',
+  id: '',
+  profilePic: '',
+  external_urls: { spotify: '' },
+  yourUrl: '',
+  images: [{ url: '' }],
+  followers: { total: '' },
+  product: ''
+};
 
-  constructor(props) {
-    super(props);
+const ProfileContainer = (props) => {
+  const [isLoading, setLoading] = useState(true);
+  const [me, setMe] = useState(initialMe);
 
-    this.state = {
-      isLoading: true,
-      me: {
-        country: '',
-        display_name: '',
-        email: '',
-        id: '',
-        profilePic: '',
-        external_urls: { spotify: '' },
-        yourUrl: '',
-        images: [{ url: '' }],
-        followers: { total: '' },
-        product: ''
-      }
-    };
-  }
-
-  componentDidMount() {
-    getMyProfile(this.props.accessToken)
+  useEffect(() => {
+    getMyProfile()
       .then(res => {
-        this.setState({
-          isLoading: false,
-          me: res.data
-        });
+        setLoading(false);
+        setMe(res.data)
       })
       .catch(err => {
         console.error(err);
 
         if (err.response) {
-          this.setState({ isLoading: false });
+          setLoading(false);
 
           switch (err.response.status) {
-            case 401: this.props.logout();
+            case 401: props.logout();
           }
         }
       });
-  }
+  }, [])
 
-  getProps() {
-    return {
-      me: this.state.me
-    };
-  }
-
-  render() {
-    return this.state.isLoading ?
-      <Loading /> :
-      <Profile {...this.getProps() } />
-  }
+  return (
+    isLoading
+      ? <Loading />
+      : <Profile me={me} />
+  );
 }
 
 export default ProfileContainer;

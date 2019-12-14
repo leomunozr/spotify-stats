@@ -1,53 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPlaylistTracks } from '../api/spotify-api';
 import TracksList from '../views/tracks-list';
 import Loading from '../views/loading';
 
-class TracksListContainer extends React.Component {
+const TracksListContainer = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [tracks, setTracks] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      tracks: []
-    };
-  }
-
-  componentDidMount() {
-    getPlaylistTracks(this.props.playlistId)
+  useEffect(() => {
+    getPlaylistTracks(props.playlistId)
       .then(tracks => {
-        this.setState({
-          isLoading: false,
-          tracks
-        });
+        setTracks(tracks);
+        setLoading(false);
       })
       .catch(err => {
         console.error(err);
 
         if (err.response) {
-          let message;
-          this.setState({ isLoading: false });
+          setLoading(false);
 
           switch (err.response.status) {
-            case 404: this.setState({ hasError: "Ooops! An error occurred. :(" });
+            case 404: setErrorMessage("Ooops! An error occurred. :(");
           }
         }
-
       });
-  }
+  }, []);
 
-  getProps() {
-    return {
-      hasError: this.state.hasError,
-      tracks: this.state.tracks
-    };
-  }
-
-  render() {
-    return this.state.isLoading ?
-      <Loading /> :
-      <TracksList {...this.getProps() } />
-  }
-}
+  return (
+    loading
+      ? <Loading />
+      : <TracksList tracks={ tracks } hasError={ errorMessage } />
+  );
+};
 
 export default TracksListContainer;

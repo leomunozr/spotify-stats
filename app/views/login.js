@@ -22,13 +22,12 @@ const uri = `${auth_uri}/` +
   `&show_dialog=${show_dialog}`;
 
 const Login = (props) => {
-
   return (
     <div className="login">
       <h2>Please log in</h2>
-      <a href={uri}>Login</a>
+      <a href={ uri }>Login</a>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

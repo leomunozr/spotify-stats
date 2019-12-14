@@ -1,51 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Loading from '../views/loading';
 import Playlists from '../views/playlists';
 import { getMyPlaylists } from '../api/spotify-api';
 
-class PlaylistsContainer extends React.Component {
+const PlaylistsContainer = (props) => {
+  const [isLoading, setLoading] = useState(true);
+  const [playlists, setPlaylists] = useState([]);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-      playlists: []
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     getMyPlaylists()
       .then(playlists => {
-        this.setState({
-          isLoading: false,
-          playlists
-        });
+        setPlaylists(playlists);
+        setLoading(false);
       })
       .catch(err => {
-        console.error(err);
-
         if (err.response) {
-          this.setState({ isLoading: false });
-
+          setLoading(false);
           switch (err.response.status) {
-            case 401: this.props.logout();
+            case 401: props.logout();
           }
         }
       });
-  }
+  }, []);
 
-  getProps() {
-    return {
-      playlists: this.state.playlists
-    }
-  }
-
-  render() {
-    return this.state.isLoading ?
-      <Loading /> :
-      <Playlists {...this.getProps()} />
-  }
+  return (
+    isLoading
+      ? <Loading />
+      : <Playlists playlists={ playlists } />
+  );
 }
 
 export default PlaylistsContainer;

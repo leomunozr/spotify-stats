@@ -5,7 +5,9 @@ import TracksListContainer from '../containers/tracks-list.container';
 const Playlists = (props) => {
 
   const isSelected = (route) => {
-    return `/playlists/${route}` === props.location.pathname ? 'playlists__list__item--selected' : '';
+    return `/playlists/${route}` === props.location.pathname
+      ? 'playlists__list__item--selected'
+      : '';
   }
 
   return (
@@ -22,7 +24,12 @@ const Playlists = (props) => {
       </div>
       <div className="playlists__content">
         {props.playlists.map((playlist) => (
-          <Route path={`/playlists/${playlist.id}`} render={() => <TracksListContainer playlistId={playlist.id} />}  key={playlist.id} />
+          <Route
+            path={ `/playlists/${playlist.id}` }
+            render={ () =>
+              <TracksListContainer playlistId={ playlist.id } />
+            }
+            key={ playlist.id } />
         ))}
       </div>
     </div>

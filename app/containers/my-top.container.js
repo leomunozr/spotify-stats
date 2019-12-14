@@ -1,67 +1,46 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Loading from '../views/loading';
 import MyTop from '../views/my-top';
 import { getMyTopArtists, getMyTopTracks } from '../api/spotify-api.js';
 
-class MyTopContainer extends React.Component{
+const MyTopContainer = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [topArtists, setTopArtists] = useState([]);
+  const [topTracks, setTopTracks] = useState([]);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-      topArtists: [],
-      topTracks: []
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const myTopArtists = getMyTopArtists()
       .then(topArtists => {
-        this.setState({
-          isLoading: false,
-          topArtists
-        });
+        setTopArtists(topArtists);
       });
 
     const myTopTracks = getMyTopTracks()
       .then(topTracks => {
-        this.setState({
-          isLoading: false,
-          topTracks
-        });
+        setTopTracks(topTracks);
       });
 
     Promise.all([myTopArtists, myTopTracks])
       .then(() => {
-        this.setState({ isLoading: false })
+        setLoading(false);
       })
       .catch(err => {
         console.error(err);
 
         if (err.response) {
-          this.setState({ isLoading: false });
+          setLoading(false);
 
           switch (err.response.status) {
-            case 401: this.props.logout();
+            case 401: props.logout();
           }
         }
       });
-  }
+  }, []);
 
-  getProps(){
-    return {
-      topArtists: this.state.topArtists,
-      topTracks: this.state.topTracks
-    };
-  }
-
-  render() {
-    return this.state.isLoading ?
-      <Loading /> :
-      <MyTop {...this.getProps() } />
-  }
-}
+  return (
+    loading
+      ? <Loading />
+      : <MyTop topArtists={ topArtists } topTracks={ topTracks } />
+  );
+};
 
 export default MyTopContainer;

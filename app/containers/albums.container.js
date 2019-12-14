@@ -1,52 +1,36 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import Albums from '../views/albums';
 import Loading from '../views/loading';
-import { getMyAlbums, getMyTopArtists } from '../api/spotify-api';
+import { getMyAlbums } from '../api/spotify-api';
 
-class AlbumsContainer extends React.Component {
+const AlbumsContainer = (props) => {
+  const [isLoading, setLoading] = useState(true);
+  const [albums, setAlbums] = useState([]);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      albums: [],
-      isLoading: true
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     getMyAlbums()
       .then(albums => {
-        this.setState({
-          albums,
-          isLoading: false
-        });
+        setAlbums(albums);
+        setLoading(false);
       })
       .catch(err => {
         console.error(err);
 
         if (err.response) {
-          this.setState({ isLoading: false });
+          setLoading(false)
 
           switch (err.response.status) {
-            case 401: this.props.logout();
+            case 401: props.logout();
           }
         }
       });
-  }
+  }, []);
 
-  getProps() {
-    return {
-      albums: this.state.albums
-    };
-  }
-
-  render() {
-    return this.state.isLoading ?
-      <Loading /> :
-      <Albums {...this.getProps() } />
-  }
+  return (
+    isLoading
+      ? <Loading />
+      : <Albums albums={ albums } />
+  );
 }
 
 export default AlbumsContainer;

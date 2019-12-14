@@ -8,9 +8,6 @@ import PlaylistsContainer from '../containers/playlists.container';
 import ProfileContainer from '../containers/profile.container';
 
 const Content = (props) => {
-
-  const { isAuthenticated, logout } = props;
-
   return (
     <div className="content">
 
