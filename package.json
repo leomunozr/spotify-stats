@@ -21,7 +21,7 @@
   "author": "Leonardo Muñoz",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "flag-icon-css": "^2.8.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
